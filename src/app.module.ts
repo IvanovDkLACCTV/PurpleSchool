@@ -9,6 +9,7 @@ import { configDotenv } from 'dotenv';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoConfig } from './configs/mongo.config';
+import { ReviewService } from './review.service';
 
 configDotenv();
 
@@ -19,7 +20,7 @@ configDotenv();
     inject: [ConfigService],
   }), AuthModule, TopPageModule, ReviewModule, ProductModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ReviewService],
 })
 export class AppModule {}
  
