@@ -21,4 +21,8 @@ export class ReviewService {
             .find({ productId: new Types.ObjectId(productId) })
             .exec() as unknown as Document<ReviewModel>[];
     }
+
+    async deleteByProductId(productId: string): Promise<{ deletedCount: number }> {
+        return this.reviewModel.deleteMany({ productId: new Types.ObjectId(productId) }).exec();
+    }
 }
