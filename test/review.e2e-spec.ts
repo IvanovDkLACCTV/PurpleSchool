@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
@@ -27,6 +27,7 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe())
     await app.init();
   });
 
@@ -43,4 +44,19 @@ describe('AppController (e2e)', () => {
         throw err;
       });
   });
+
+  it('/review/create (POST) validation error', async () => {
+    return request(app.getHttpServer())
+      .post('/review/create')
+      .send({...testDto, rating: 6})
+      .expect(400)
+      .then(({ body }: request.Response) => {
+        console.log(body);
+        expect(body.statusCode).toBe(400);
+    });
+  });
+
+  afterAll(async () => {
+    await app.close();
+});
 }); 
