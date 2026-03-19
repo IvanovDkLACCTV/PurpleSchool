@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Debug NestJS",
+            "port": 9229,
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}/src",
+            "remoteRoot": "/app",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
+    ]
+}
