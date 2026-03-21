@@ -3,7 +3,7 @@ import { AuthDto } from './dto/auth.dto';
 import { UserModel } from './auth.model/auth.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { getSalt, hashSync } from 'bcryptjs'
+import { hashSync } from 'bcryptjs'
 
 @Injectable()
 export class AuthService {
@@ -14,10 +14,9 @@ export class AuthService {
 
     async createUser(dto: AuthDto){
 
-        const salt = getSalt('10')
         const newUser =  new this.userModel({
             email: dto.email,
-            passwordHash: hashSync(dto.password, salt)
+            passwordHash: hashSync(dto.password, 10)
         })
         return newUser.save()
     }
